@@ -113,6 +113,6 @@ Você deverá criar um app, que deverá ter a opção de executar a sua soluçã
 
 Além de verificar se sua solução satisfaz as regras do problema, também avaliaremos outros aspectos, como o design de sua solução e seu domínio de orientação a objetos. Nós esperamos que você encaminhe um código que acredite ser de qualidade, um código que funcione e que tenha sido evoluído no decorrer de seu desenvolvimento.
 
-Outro requisito é o envio dos testes que você produziu para verificar sua solução. Os testes podem ser produzidos com jUnit, Robotium (ou qualquer outra suite de testes para Ruby). Independente de serem feitos antes ou depois de criada a implementação, queremos ter a chance de observar sua habilidade em produzí-los e verificar as regras do problema.
+Outro requisito é o envio dos testes que você produziu para verificar sua solução. Os testes podem ser produzidos com jUnit, Robotium (ou qualquer outra suite de testes para Java). Independente de serem feitos antes ou depois de criada a implementação, queremos ter a chance de observar sua habilidade em produzí-los e verificar as regras do problema.
 
 Você terá **5 dias** para entregar sua solução, a contar do dia em que você receber o acesso ao nosso repositório. Após ter finalizado sua implementação, você deverá enviar seu código para o branch em nosso repositório.
