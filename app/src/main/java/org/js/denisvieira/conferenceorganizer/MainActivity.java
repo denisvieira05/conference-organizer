@@ -119,20 +119,20 @@ public class MainActivity extends AppCompatActivity {
 
                     tvFilename.setText(uri.getLastPathSegment());
 
-                    File input = new File(path);
                     try {
                         AssetManager assetManager = getResources().getAssets();
                         InputStream inputStream = assetManager.open("proposals.txt");
                         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                         String linha;
+
                         ArrayList<String> lectures = new ArrayList<String>();
+
                         while((linha = bufferedReader.readLine())!=null){
                             lectures.add(linha);
-                            Log.i("Linha",linha);
                         }
-                        inputStream.close();
 
+                        inputStream.close();
                         organizeConference(lectures);
 
                     } catch (IOException e) {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     public void organizeConference(ArrayList<String> lectures){
         Intent intent = new Intent(this,SchedulesActivity.class);
         Bundle b = new Bundle();
-        b.putStringArrayList("lectures", lectures); //Your id
+        b.putStringArrayList("lectures", lectures);
         intent.putExtras(b);
         startActivity(intent);
     }

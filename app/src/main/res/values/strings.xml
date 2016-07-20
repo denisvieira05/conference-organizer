@@ -13,4 +13,8 @@
     </string>
     <string name="detail_location">"8 Rue Scribe, 75009 Paris, France"</string>
     <string name="section_format">"TEST"</string>
+    <string name="item_title">"TEST"</string>
+        <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for
+        the Paris Opera.
+    </string>
 </resources>

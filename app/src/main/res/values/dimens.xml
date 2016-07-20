@@ -8,4 +8,7 @@
     <dimen name="article_keylines">72dp</dimen>
     <dimen name="article_titles">20dp</dimen>
     <dimen name="app_bar_height">156dp</dimen>
+
+    <dimen name="article_subheading">16sp</dimen>
+    <dimen name="list_body">14sp</dimen>
 </resources>

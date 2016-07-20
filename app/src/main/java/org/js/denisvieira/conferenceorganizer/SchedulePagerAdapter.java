@@ -24,13 +24,13 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
 
-        return SchedulesActivity.PlaceholderFragment.newInstance(position + 1);
+        return PlaceholderFragment.newInstance(position + 1);
 
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -41,8 +41,6 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
                 return "Track A";
             case 1:
                 return "Track B";
-            case 2:
-                return "Track C";
         }
         return null;
     }
