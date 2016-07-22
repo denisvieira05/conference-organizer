@@ -28,7 +28,7 @@ public class LecturesListViewAdapter extends ArrayAdapter<Lecture> {
 
         Lecture lecture = getItem(position);
 
-        view = LayoutInflater.from(getContext()).inflate(R.layout.item_schedule, null);
+        view = LayoutInflater.from(getContext()).inflate(R.layout.item_lecture, null);
 
         ((TextView)view.findViewById(R.id.hour_tv)).setText("12:00");
         ((TextView)view.findViewById(R.id.title_tv)).setText(lecture.getTitle());

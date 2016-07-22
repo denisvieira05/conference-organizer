@@ -2,7 +2,6 @@ package org.js.denisvieira.conferenceorganizer;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +29,7 @@ public class ScheduleContentFragment extends Fragment {
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_schedule, parent, false));
+            super(inflater.inflate(R.layout.item_lecture, parent, false));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

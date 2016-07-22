@@ -117,26 +117,47 @@ public class MainActivity extends AppCompatActivity {
                     Uri uri = data.getData();
                     String path = uri.getPath();
 
-                    tvFilename.setText(uri.getLastPathSegment());
+                    File file = new File(uri.getPath());
 
-                    try {
-                        AssetManager assetManager = getResources().getAssets();
-                        InputStream inputStream = assetManager.open("proposals.txt");
-                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                        String linha;
+                    if(uri.getLastPathSegment().contains(".")){
+                        String ext = file.getName().substring(file.getName().lastIndexOf('.'));
 
-                        ArrayList<String> lectures = new ArrayList<String>();
+//                        if(ext.equals(".txt")){
 
-                        while((linha = bufferedReader.readLine())!=null){
-                            lectures.add(linha);
-                        }
+                            try {
+                                AssetManager assetManager = getResources().getAssets();
+//                                InputStream inputStream = assetManager.open("");
+                                InputStream inputStream = assetManager.open("proposals.txt");
+//                                InputStream inputStream = assetManager.open(file.getName());
+// InputStream inputStream = assetManager.open("proposals.txt");
 
-                        inputStream.close();
-                        organizeConference(lectures);
+                                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                                String linha;
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                                ArrayList<String> lectures = new ArrayList<String>();
+
+                                while((linha = bufferedReader.readLine())!=null){
+                                    lectures.add(linha);
+                                }
+
+                                inputStream.close();
+
+                                tvFilename.setText(uri.getLastPathSegment());
+
+//                                Log.i("lecturesArrayList : ",linha);
+
+
+                               organizeConference(lectures);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+//                        }else{
+//                            Toast.makeText(this, "Insert a file in *.txt format",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+
                     }
                 }
                 break;
