@@ -26,7 +26,7 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a TrackListContentFragment (defined as a static inner class below).
 
-        return TrackListContentFragment.newInstance(position + 1);
+        return TrackListContentFragment.newInstance(position);
 
     }
 

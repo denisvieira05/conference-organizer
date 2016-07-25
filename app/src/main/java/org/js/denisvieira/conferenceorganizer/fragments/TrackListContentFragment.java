@@ -61,8 +61,7 @@ public class TrackListContentFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.lectures_lv);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("view :"+getArguments().getInt(ARG_SECTION_NUMBER));
-        Bundle bundle = getActivity().getIntent().getExtras();
-        Integer trackId = bundle.getInt(ARG_SECTION_NUMBER);
+        Integer trackId = getArguments().getInt(ARG_SECTION_NUMBER);
         getLecturesList(trackId);
 
         return rootView;
