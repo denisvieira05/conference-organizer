@@ -2,7 +2,6 @@ package org.js.denisvieira.conferenceorganizer.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Created by denisvieira on 20/07/16.
  */
-public class TrackListContentFragment extends Fragment {
+public class ListContentFragment extends Fragment {
 
     private ListView listView;
     private ArrayList<Lecture> lecturesArrayList;
@@ -31,7 +30,7 @@ public class TrackListContentFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public TrackListContentFragment() {
+    public ListContentFragment() {
     }
 
     @Override
@@ -42,8 +41,8 @@ public class TrackListContentFragment extends Fragment {
 
     }
 
-    public static TrackListContentFragment newInstance(int sectionNumber) {
-        TrackListContentFragment fragment = new TrackListContentFragment();
+    public static ListContentFragment newInstance(int sectionNumber) {
+        ListContentFragment fragment = new ListContentFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);

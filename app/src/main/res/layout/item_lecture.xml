@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
@@ -10,7 +10,8 @@
 
     <TextView
         android:id="@+id/hour_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="12:00"
         android:textAppearance="?attr/textAppearanceListItem"
@@ -20,22 +21,21 @@
 
     <TextView
         android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/md_keylines"
-        android:layout_toRightOf="@+id/hour_tv"
         android:text="@string/item_title"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/article_subheading" />
 
 
     <TextView android:id="@+id/time_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="46min"
         android:textSize="@dimen/article_subheading"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:gravity="center"
         android:textColor="@color/dark_grey"/>
 
-</RelativeLayout>
+</LinearLayout>

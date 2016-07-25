@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.js.denisvieira.conferenceorganizer.fragments.TrackListContentFragment;
+import org.js.denisvieira.conferenceorganizer.fragments.ListContentFragment;
 
 /**
  * Created by denisvieira on 19/07/16.
@@ -24,9 +24,9 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         // getItem is called to instantiate the fragment for the given page.
-        // Return a TrackListContentFragment (defined as a static inner class below).
+        // Return a ListContentFragment (defined as a static inner class below).
 
-        return TrackListContentFragment.newInstance(position);
+        return ListContentFragment.newInstance(position);
 
     }
 
