@@ -87,7 +87,7 @@ public class ListContentFragment extends Fragment {
         for (int b = 0; b < tracksOfConference.get(trackId).getMorningSession().size(); b++) {
             track.add(tracksOfConference.get(trackId).getMorningSession().get(b));
         }
-        for (int b = 0; b < tracksOfConference.get(trackId).getMorningSession().size(); b++) {
+        for (int b = 0; b < tracksOfConference.get(trackId).getAfternoonSession().size(); b++) {
             track.add(tracksOfConference.get(trackId).getAfternoonSession().get(b));
         }
 

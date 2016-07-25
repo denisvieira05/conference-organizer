@@ -38,13 +38,7 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        switch (position) {
-            case 0:
-                return "Track A";
-            case 1:
-                return "Track B";
-        }
-        return null;
+       return "Track "+(position+1);
     }
 
 }
