@@ -1,4 +1,4 @@
-package org.js.denisvieira.conferenceorganizer;
+package org.js.denisvieira.conferenceorganizer.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import org.js.denisvieira.conferenceorganizer.R;
+import org.js.denisvieira.conferenceorganizer.adapters.LecturesListViewAdapter;
+import org.js.denisvieira.conferenceorganizer.models.Conference;
+import org.js.denisvieira.conferenceorganizer.models.Lecture;
+import org.js.denisvieira.conferenceorganizer.models.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +24,8 @@ import java.util.regex.Pattern;
  */
 public class TrackListContentFragment extends Fragment {
 
-    ListView listView;
-    ArrayList<Lecture> lecturesArrayList;
+    private ListView listView;
+    private ArrayList<Lecture> lecturesArrayList;
     LecturesListViewAdapter mAdapter;
 
 
@@ -56,39 +62,39 @@ public class TrackListContentFragment extends Fragment {
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("view :"+getArguments().getInt(ARG_SECTION_NUMBER));
 
-
         getLecturesList();
+
         return rootView;
     }
 
-    private void getLecturesList() {
-        listView.setAdapter(null);
+    public void getLecturesList() {
 
         lecturesArrayList = new ArrayList<>();
-
         Bundle b = getActivity().getIntent().getExtras();
         ArrayList<String> lecturesString = b.getStringArrayList("lectures");
 
-
-
         for (int i = 0; i < lecturesString.size(); i++) {
-
             lecturesArrayList.add(createLecture(lecturesString.get(i),i));
         }
 
-//        for (int a = 0; a < lecturesArrayList.size(); a++) {
-//            Log.i("lecturesArrayList : "+lecturesArrayList.get(a).getMinutes(),lecturesArrayList.get(a).getTitle());
-//        }
+        for (int a = 0; a < lecturesArrayList.size(); a++) {
+            Log.i("lecturesArrayList : "+lecturesArrayList.get(a).getMinutes(),lecturesArrayList.get(a).getTitle());
+        }
+
+        listView.setAdapter(null);
+
         ArrayList<Track> tracks = new ArrayList<>();
         Conference conference = new Conference(tracks);
-        conference.organizeConference(lecturesArrayList);
-
-        for (int a = 0; a < conference.getConference().size(); a++) {
-            Log.i("getConference",conference.getConference().get(a).toString());
-        }
+//        conference.organizeConference(lecturesArrayList);
+//
+//        for (int a = 0; a < conference.getConference().size(); a++) {
+//            Log.i("getConference",conference.getConference().get(a).toString());
+//        }
 
         mAdapter = new LecturesListViewAdapter(getActivity(), lecturesArrayList);
         listView.setAdapter(mAdapter);
+
+
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //

@@ -1,4 +1,4 @@
-package org.js.denisvieira.conferenceorganizer;
+package org.js.denisvieira.conferenceorganizer.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import org.js.denisvieira.conferenceorganizer.R;
+import org.js.denisvieira.conferenceorganizer.models.Lecture;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package org.js.denisvieira.conferenceorganizer;
+package org.js.denisvieira.conferenceorganizer.activitys;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,25 +12,21 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.js.denisvieira.conferenceorganizer.R;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
@@ -122,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
                     if(uri.getLastPathSegment().contains(".")){
                         String ext = file.getName().substring(file.getName().lastIndexOf('.'));
 
-//                        if(ext.equals(".txt")){
+                        if(ext.equals(".txt")){
 
                             try {
                                 AssetManager assetManager = getResources().getAssets();
 //                                InputStream inputStream = assetManager.open("");
-                                InputStream inputStream = assetManager.open("proposals.txt");
-//                                InputStream inputStream = assetManager.open(file.getName());
+//                                InputStream inputStream = assetManager.open("proposals.txt");
+                                InputStream inputStream = assetManager.open(file.getName());
 // InputStream inputStream = assetManager.open("proposals.txt");
 
                                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -153,10 +149,10 @@ public class MainActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-//                        }else{
-//                            Toast.makeText(this, "Insert a file in *.txt format",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
+                        }else{
+                            Toast.makeText(this, "Insert a file in *.txt format",
+                                    Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 }

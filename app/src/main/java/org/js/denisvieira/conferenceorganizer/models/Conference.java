@@ -1,4 +1,4 @@
-package org.js.denisvieira.conferenceorganizer;
+package org.js.denisvieira.conferenceorganizer.models;
 
 import java.util.ArrayList;
 
@@ -45,11 +45,16 @@ public class Conference {
 
             for (int i = beginPosition; i < lecturesToBeAdded.size(); i++) {
 
-                if(track.addLecture(lecturesToBeAdded.get(i))){
-                    track.addLecture(lecturesToBeAdded.get(i));
-                    nextTrack = false;
-                }else{
-                    nextTrack = true;
+                switch (track.typeToAddLecture(lecturesToBeAdded.get(i))){
+                    case 0: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_MORNING_TYPE);
+                            nextTrack = false;
+                            break;
+                    case 1: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_AFTERNOON_TYPE);
+                            nextTrack = false;
+                            break;
+                    default:
+                            nextTrack = true;
+                            break;
                 }
             }
         }

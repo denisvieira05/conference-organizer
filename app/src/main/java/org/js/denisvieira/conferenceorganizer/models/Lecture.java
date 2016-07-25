@@ -1,4 +1,4 @@
-package org.js.denisvieira.conferenceorganizer;
+package org.js.denisvieira.conferenceorganizer.models;
 
 import java.io.Serializable;
 
@@ -13,6 +13,10 @@ public class Lecture implements Serializable {
     private Integer minutes;
 
     public Lecture(Integer id, String title, Integer minutes) {
+
+        if(minutes <= 0)
+            throw new IllegalArgumentException("Minutes of lecture can't be negative");
+
         this.id = id;
         this.title = title;
         this.minutes = minutes;
@@ -41,4 +45,6 @@ public class Lecture implements Serializable {
     public void setMinutes(Integer minutes) {
         this.minutes = minutes;
     }
+
+
 }

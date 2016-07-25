@@ -1,4 +1,4 @@
-package org.js.denisvieira.conferenceorganizer;
+package org.js.denisvieira.conferenceorganizer.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,29 +46,22 @@ public class Track implements Serializable{
         return totalTrackLecturesSize;
     }
 
-    public boolean addLecture(Lecture lecture){
-        if(typeToAddLecture(lecture) == PERIOD_MORNING_TYPE){
+    public void addLecture(Lecture lecture,Integer type){
+        if(type == PERIOD_MORNING_TYPE){
             morningSession.add(lecture);
-            return true;
-        }else if(typeToAddLecture(lecture) == PERIOD_AFTERNOON_TYPE){
+        }else if(type == PERIOD_AFTERNOON_TYPE) {
             afternoonSession.add(lecture);
-            return true;
-        }else{
-            return false;
         }
     }
 
     public Integer typeToAddLecture(Lecture lecture) {
 
-        Integer lectureTimeMorningSum = sumTimeMorning + lecture.getMinutes();
-        Integer lectureTimeAfternoonSum = sumTimeAfternoon + lecture.getMinutes();
-
-        if( lectureTimeMorningSum <= 180){
+        if( (sumTimeMorning + lecture.getMinutes()) <= 180){
             sumTimeMorning = sumTimeMorning + lecture.getMinutes();
 
             return PERIOD_MORNING_TYPE;
 
-        }else if(lectureTimeAfternoonSum <= 420 && lectureTimeAfternoonSum > 180){
+        }else if((sumTimeAfternoon + lecture.getMinutes()) <= 420 && (sumTimeAfternoon + lecture.getMinutes()) > 180){
             sumTimeAfternoon = sumTimeAfternoon + lecture.getMinutes();
 
             return PERIOD_AFTERNOON_TYPE;
