@@ -14,12 +14,10 @@ public class Track implements Serializable{
     private Integer sumTimeMorning = 0;
     private Integer sumTimeAfternoon = 180;
 
-    private ArrayList<Lecture> morningSession;
-    private ArrayList<Lecture> afternoonSession;
+    private ArrayList<Lecture> morningSession = new ArrayList<>();
+    private ArrayList<Lecture> afternoonSession = new ArrayList<>();
 
-    public Track(ArrayList<Lecture> morningSession, ArrayList<Lecture> afternoonSession) {
-        this.morningSession = morningSession;
-        this.afternoonSession = afternoonSession;
+    public Track() {
     }
 
     public ArrayList<Lecture> getMorningSession() {
@@ -38,10 +36,10 @@ public class Track implements Serializable{
         this.afternoonSession = afternoonSession;
     }
 
-    public Integer getTrackLecturesSize(){
+    public Integer getTrackLecturesSize(Track track){
         Integer totalTrackLecturesSize = 0;
-        totalTrackLecturesSize += morningSession.size();
-        totalTrackLecturesSize += afternoonSession.size();
+        totalTrackLecturesSize += track.getMorningSession().size();
+        totalTrackLecturesSize += track.getAfternoonSession().size();
 
         return totalTrackLecturesSize;
     }
@@ -70,5 +68,34 @@ public class Track implements Serializable{
         }
 
     }
+
+
+    public Track createTrack(ArrayList<Lecture> lecturesToBeAdded, Integer beginPosition){
+
+        boolean nextTrack = false;
+
+        Track track = new Track();
+
+        while(!nextTrack){
+
+            for (int i = beginPosition; i < lecturesToBeAdded.size(); i++) {
+
+                switch (track.typeToAddLecture(lecturesToBeAdded.get(i))){
+                    case 0: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_MORNING_TYPE);
+                        nextTrack = false;
+                        break;
+                    case 1: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_AFTERNOON_TYPE);
+                        nextTrack = false;
+                        break;
+                    default:
+                        nextTrack = true;
+                        break;
+                }
+            }
+        }
+
+        return track;
+    }
+
 
 }

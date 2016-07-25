@@ -1,5 +1,7 @@
 package org.js.denisvieira.conferenceorganizer.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -7,11 +9,9 @@ import java.util.ArrayList;
  */
 public class Conference {
 
+    ArrayList<Track> conference;
 
-    private ArrayList<Track> conference;
-
-    public Conference(ArrayList<Track> conference) {
-        this.conference = conference;
+    public Conference() {
     }
 
     public ArrayList<Track> getConference() {
@@ -22,47 +22,22 @@ public class Conference {
         this.conference = conference;
     }
 
-    public void organizeConference(ArrayList<Lecture> lecturesToBeAdded){
+    public ArrayList<Track> organizeConference(ArrayList<Lecture> lecturesToBeAdded){
+
+        conference = new ArrayList<>();
 
         Integer beginPosition = 0;
 
-        while (beginPosition != lecturesToBeAdded.lastIndexOf(lecturesToBeAdded)){
-            createTrack(lecturesToBeAdded, beginPosition);
+        while (beginPosition < lecturesToBeAdded.size()){
+            Track track = new Track();
+            track = track.createTrack(lecturesToBeAdded, beginPosition);
+            beginPosition += track.getTrackLecturesSize(track);
+            conference.add(track);
         }
+
+        return conference;
 
     }
 
-    public Integer createTrack(ArrayList<Lecture> lecturesToBeAdded, Integer beginPosition){
-
-        boolean nextTrack = false;
-
-        ArrayList<Lecture> morningSession = new ArrayList<>();
-        ArrayList<Lecture> afternoonSession = new ArrayList<>();
-
-        Track track = new Track(morningSession,afternoonSession);
-
-        while(!nextTrack){
-
-            for (int i = beginPosition; i < lecturesToBeAdded.size(); i++) {
-
-                switch (track.typeToAddLecture(lecturesToBeAdded.get(i))){
-                    case 0: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_MORNING_TYPE);
-                            nextTrack = false;
-                            break;
-                    case 1: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_AFTERNOON_TYPE);
-                            nextTrack = false;
-                            break;
-                    default:
-                            nextTrack = true;
-                            break;
-                }
-            }
-        }
-
-        conference.add(track);
-
-        beginPosition = track.getTrackLecturesSize();
-        return beginPosition;
-    }
 
 }

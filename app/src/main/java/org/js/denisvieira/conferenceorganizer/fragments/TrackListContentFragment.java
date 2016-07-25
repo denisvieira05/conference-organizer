@@ -61,56 +61,40 @@ public class TrackListContentFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.lectures_lv);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("view :"+getArguments().getInt(ARG_SECTION_NUMBER));
-
-        getLecturesList();
+        Bundle bundle = getActivity().getIntent().getExtras();
+        Integer trackId = bundle.getInt(ARG_SECTION_NUMBER);
+        getLecturesList(trackId);
 
         return rootView;
     }
 
-    public void getLecturesList() {
+    public void getLecturesList(Integer trackId) {
 
         lecturesArrayList = new ArrayList<>();
-        Bundle b = getActivity().getIntent().getExtras();
-        ArrayList<String> lecturesString = b.getStringArrayList("lectures");
+        Bundle bundle = getActivity().getIntent().getExtras();
+        ArrayList<String> lecturesString = bundle.getStringArrayList("lectures");
 
         for (int i = 0; i < lecturesString.size(); i++) {
             lecturesArrayList.add(createLecture(lecturesString.get(i),i));
         }
 
-        for (int a = 0; a < lecturesArrayList.size(); a++) {
-            Log.i("lecturesArrayList : "+lecturesArrayList.get(a).getMinutes(),lecturesArrayList.get(a).getTitle());
-        }
-
         listView.setAdapter(null);
 
-        ArrayList<Track> tracks = new ArrayList<>();
-        Conference conference = new Conference(tracks);
-//        conference.organizeConference(lecturesArrayList);
-//
-//        for (int a = 0; a < conference.getConference().size(); a++) {
-//            Log.i("getConference",conference.getConference().get(a).toString());
-//        }
+        ArrayList<Track> tracksOfConference = new ArrayList<>();
+        Conference conference = new Conference();
+        tracksOfConference.addAll(conference.organizeConference(lecturesArrayList));
 
-        mAdapter = new LecturesListViewAdapter(getActivity(), lecturesArrayList);
+        ArrayList<Lecture> track = new ArrayList<>();
+
+        for (int b = 0; b < tracksOfConference.get(trackId).getMorningSession().size(); b++) {
+            track.add(tracksOfConference.get(trackId).getMorningSession().get(b));
+        }
+        for (int b = 0; b < tracksOfConference.get(trackId).getMorningSession().size(); b++) {
+            track.add(tracksOfConference.get(trackId).getAfternoonSession().get(b));
+        }
+
+        mAdapter = new LecturesListViewAdapter(getActivity(), track);
         listView.setAdapter(mAdapter);
-
-
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Mensagem conversa = (Mensagem) parent.getAdapter().getItem(position);
-//                Intent intent = new Intent(getActivity(), ConversaActivity.class);
-//
-//                if(conversa.getIdUserDestinatario()==selfUserId){
-//                    intent.putExtra("destinatarioId", conversa.getIdUserRemetente());
-//                }else{
-//                    intent.putExtra("destinatarioId", conversa.getIdUserDestinatario());
-//                }
-//                intent.putExtra("name", conversa.getDsMensagem());
-//                startActivity(intent);
-//            }
-//        });
 
     }
 
