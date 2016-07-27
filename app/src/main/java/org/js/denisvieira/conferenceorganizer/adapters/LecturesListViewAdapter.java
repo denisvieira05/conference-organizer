@@ -12,6 +12,7 @@ import org.js.denisvieira.conferenceorganizer.R;
 import org.js.denisvieira.conferenceorganizer.models.Lecture;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by denisvieira on 20/07/16.
@@ -33,7 +34,12 @@ public class LecturesListViewAdapter extends ArrayAdapter<Lecture> {
 
         view = LayoutInflater.from(getContext()).inflate(R.layout.item_lecture, null);
 
-        ((TextView)view.findViewById(R.id.hour_tv)).setText("12:00");
+        String hour = String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(lecture.getSchedule()),
+                TimeUnit.MILLISECONDS.toMinutes(lecture.getSchedule()) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(lecture.getSchedule())));
+
+        ((TextView)view.findViewById(R.id.hour_tv)).setText(hour);
         ((TextView)view.findViewById(R.id.title_tv)).setText(lecture.getTitle());
         ((TextView)view.findViewById(R.id.time_tv)).setText(lecture.getMinutes().toString()+"min");
 

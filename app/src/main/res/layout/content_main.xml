@@ -17,9 +17,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:src="@drawable/conference" />
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/conference_logo"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="match_parent"

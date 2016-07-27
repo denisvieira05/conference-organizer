@@ -2,6 +2,7 @@ package org.js.denisvieira.conferenceorganizer.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by denisvieira on 22/07/16.
@@ -69,6 +70,13 @@ public class Track implements Serializable{
 
     }
 
+    public boolean isAfternoonSessionEmpty(){
+        if(afternoonSession.size() == 0){
+            return true;
+        }
+        return false;
+    }
+
 
     public Track createTrack(ArrayList<Lecture> lecturesToBeAdded, Integer beginPosition){
 
@@ -78,13 +86,39 @@ public class Track implements Serializable{
 
         while(!nextTrack){
 
+            long morningBeginTimeSchedule = 32400000;
+            long afternoonBeginTimeSchedule = 46800000;
+
             for (int i = beginPosition; i < lecturesToBeAdded.size(); i++) {
 
                 switch (track.typeToAddLecture(lecturesToBeAdded.get(i))){
-                    case 0: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_MORNING_TYPE);
+                    case 0:
+                        Lecture lecture = lecturesToBeAdded.get(i);
+
+                        if(i==0){
+                            lecture.setSchedule(morningBeginTimeSchedule);
+                        }else{
+                            Calendar currentMilli = Calendar.getInstance();
+                            currentMilli.set(Calendar.MINUTE,lecturesToBeAdded.get(i).getMinutes());
+                            lecture.setSchedule(lecturesToBeAdded.get(i-1).getSchedule() + currentMilli.getTimeInMillis());
+                        }
+
+                        track.addLecture(lecture,Track.PERIOD_MORNING_TYPE);
                         nextTrack = false;
                         break;
-                    case 1: track.addLecture(lecturesToBeAdded.get(i),Track.PERIOD_AFTERNOON_TYPE);
+
+                    case 1:
+                        Lecture lectureAffternoon = lecturesToBeAdded.get(i);
+
+                        if(isAfternoonSessionEmpty()){
+                            lectureAffternoon.setSchedule(afternoonBeginTimeSchedule);
+                        }else{
+                            Calendar currentMilli = Calendar.getInstance();
+                            currentMilli.set(Calendar.MINUTE,lecturesToBeAdded.get(i).getMinutes());
+                            lectureAffternoon.setSchedule(lecturesToBeAdded.get(i-1).getSchedule() + currentMilli.getTimeInMillis());
+                        }
+
+                        track.addLecture(lectureAffternoon,Track.PERIOD_AFTERNOON_TYPE);
                         nextTrack = false;
                         break;
                     default:

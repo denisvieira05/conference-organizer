@@ -12,11 +12,9 @@ import org.js.denisvieira.conferenceorganizer.adapters.LecturesListViewAdapter;
 import org.js.denisvieira.conferenceorganizer.models.Conference;
 import org.js.denisvieira.conferenceorganizer.models.Lecture;
 import org.js.denisvieira.conferenceorganizer.models.Track;
+import org.js.denisvieira.conferenceorganizer.utils.LectureUtils;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by denisvieira on 20/07/16.
@@ -28,7 +26,7 @@ public class ListContentFragment extends Fragment {
     LecturesListViewAdapter mAdapter;
 
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String ARG_TRACK_NUMBER = "track_number";
 
     public ListContentFragment() {
     }
@@ -44,7 +42,7 @@ public class ListContentFragment extends Fragment {
     public static ListContentFragment newInstance(int sectionNumber) {
         ListContentFragment fragment = new ListContentFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putInt(ARG_TRACK_NUMBER, sectionNumber);
         fragment.setArguments(args);
 
         return fragment;
@@ -59,26 +57,27 @@ public class ListContentFragment extends Fragment {
 
         listView = (ListView) rootView.findViewById(R.id.lectures_lv);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText("view :"+getArguments().getInt(ARG_SECTION_NUMBER));
-        Integer trackId = getArguments().getInt(ARG_SECTION_NUMBER);
+//            textView.setText("view :"+getArguments().getInt(ARG_TRACK_NUMBER));
+        Integer trackId = getArguments().getInt(ARG_TRACK_NUMBER);
         getLecturesList(trackId);
 
         return rootView;
     }
 
+
     public void getLecturesList(Integer trackId) {
+        listView.setAdapter(null);
 
         lecturesArrayList = new ArrayList<>();
+
         Bundle bundle = getActivity().getIntent().getExtras();
         ArrayList<String> lecturesString = bundle.getStringArrayList("lectures");
 
-        for (int i = 0; i < lecturesString.size(); i++) {
-            lecturesArrayList.add(createLecture(lecturesString.get(i),i));
-        }
-
-        listView.setAdapter(null);
+        LectureUtils lectureUtils = new LectureUtils();
+        lecturesArrayList = lectureUtils.createLectureArrayList(lecturesString);
 
         ArrayList<Track> tracksOfConference = new ArrayList<>();
+
         Conference conference = new Conference();
         tracksOfConference.addAll(conference.organizeConference(lecturesArrayList));
 
@@ -96,42 +95,4 @@ public class ListContentFragment extends Fragment {
 
     }
 
-    private Lecture createLecture(String lectureString,int position) {
-
-        String title;
-        String minutes;
-        List<String> strTimes = new ArrayList();
-
-        //Tentar colocar em uma só.
-        String expressionPattern = "([0-9][0-9])min"; // padrão para os minutos
-        String lightningExpressionPattern = "(lightning)";
-
-        //Patern e Matcher normal
-        Pattern pattern = Pattern.compile(expressionPattern);
-        Matcher matcher = pattern.matcher(lectureString);
-
-        //Pattern e Matcher do lightning
-        Pattern lightningPatern = Pattern.compile(lightningExpressionPattern);
-        Matcher lightningMatcher = lightningPatern.matcher(lectureString);
-
-        while (matcher.find()) {
-            strTimes.add(matcher.group());
-        }
-
-        if (strTimes.size() > 0) {
-            title = lectureString.replace(strTimes.get(0).trim(), "").trim();
-            minutes = strTimes.get(0).trim().replace("min", "");
-            return new Lecture(position, title, Integer.parseInt(minutes));
-
-        } else {
-
-            if (lightningMatcher.find()) {
-                title = lectureString.replace("lightning".trim(), "").trim();
-                minutes = "5";
-                return new Lecture(position, title,Integer.parseInt(minutes));
-            }
-        }
-
-        return null;
-    }
 }

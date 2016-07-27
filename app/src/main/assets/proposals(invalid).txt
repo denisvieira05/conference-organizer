@@ -1,0 +1,2 @@
+Diminuindo tempo de execução de testes em aplicações Rails enterprise 60min
+Reinventando a roda em ASP clássico 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.js.denisvieira.conferenceorganizer.R;
+import org.js.denisvieira.conferenceorganizer.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,12 +54,6 @@ public class MainActivity extends AppCompatActivity {
         tvFilename = (TextView) findViewById(R.id.filename_tv);
         setSupportActionBar(toolbar);
 
-//        fragment = new SelectionFileFragment();
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.content_main, fragment).commit();
-
-
         Drawable myFabSrc = getResources().getDrawable(android.R.drawable.ic_dialog_info);
         Drawable willBeWhite = myFabSrc.getConstantState().newDrawable();
         willBeWhite.mutate().setColorFilter(getResources().getColor(R.color.colorRedDark), PorterDuff.Mode.MULTIPLY);
@@ -74,17 +69,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        helpButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "Insira um arquivo no formato txt.",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         ivIconFile.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
+
+//                 text without chooser
+//                ArrayList<String> lectures;
+//                FileUtils fileUtils = new FileUtils();
+//                lectures = fileUtils.getLecturesStrings(getApplicationContext());
+//                goToConference(lectures);
+
                 showFileChooser();
             }
         });
@@ -109,51 +103,27 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case FILE_SELECT_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    // Get the Uri of the selected file
-                    Uri uri = data.getData();
-                    String path = uri.getPath();
+                    FileUtils fileUtils = new FileUtils();
+                    ArrayList<String> lectures;
 
-                    File file = new File(uri.getPath());
+                    Boolean fileIsCorrect = fileUtils.fileIsCorrect(data.getData(),"txt");
 
-                    if(uri.getLastPathSegment().contains(".")){
-                        String ext = file.getName().substring(file.getName().lastIndexOf('.'));
+                    if (fileIsCorrect){
+                        Uri uri = data.getData();
 
-                        if(ext.equals(".txt")){
+                        lectures = fileUtils.getLecturesStrings(uri, getApplicationContext());
 
-                            try {
-                                AssetManager assetManager = getResources().getAssets();
-//                                InputStream inputStream = assetManager.open("");
-//                                InputStream inputStream = assetManager.open("proposals.txt");
-                                InputStream inputStream = assetManager.open(file.getName());
-// InputStream inputStream = assetManager.open("proposals.txt");
-
-                                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                                String linha;
-
-                                ArrayList<String> lectures = new ArrayList<String>();
-
-                                while((linha = bufferedReader.readLine())!=null){
-                                    lectures.add(linha);
-                                }
-
-                                inputStream.close();
-
-                                tvFilename.setText(uri.getLastPathSegment());
-
-//                                Log.i("lecturesArrayList : ",linha);
-
-
-                               organizeConference(lectures);
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }else{
-                            Toast.makeText(this, "Insert a file in *.txt format",
-                                    Toast.LENGTH_SHORT).show();
+                        if (lectures.size() <= 0) {
+                            Toast.makeText(this, "*.txt File with invalid content, click HELP for information on how to format your file.",
+                                    Toast.LENGTH_LONG).show();
+                        }else {
+                            tvFilename.setText(uri.getLastPathSegment());
+                            goToConference(lectures);
                         }
 
+                    }else {
+                        Toast.makeText(this, "Insert a file in *.txt format",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -161,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void organizeConference(ArrayList<String> lectures){
+    public void goToConference(ArrayList<String> lectures){
         Intent intent = new Intent(this,SchedulesActivity.class);
         Bundle b = new Bundle();
         b.putStringArrayList("lectures", lectures);
