@@ -98,13 +98,14 @@ public class Track implements Serializable{
                 switch (track.typeToAddLecture(lecturesToBeAdded.get(i))){
                     case 0:
                         Lecture lecture = lecturesToBeAdded.get(i);
+                        final Integer lastMorningSize = track.getMorningSession().size();
 
-                        if(i==0){
+                        if(lastMorningSize==0){
                             Time afterAddingMins=new Time(MORNING_BEGIN_TIME_SCHEDULE);
                             lecture.setSchedule(afterAddingMins);
                         }else{
-                            long t= lecturesToBeAdded.get(i-1).getSchedule().getTime();
-                            Time afterAddingMins=new Time(t + ( lecturesToBeAdded.get(i-1).getMinutes() * ONE_MINUTE_IN_MILLIS));
+                            Lecture lastMorningLecture= track.getMorningSession().get(lastMorningSize-1);
+                            Time afterAddingMins=new Time(lastMorningLecture.getSchedule().getTime() + ( lastMorningLecture.getMinutes() * ONE_MINUTE_IN_MILLIS));
                             lecture.setSchedule(afterAddingMins);
                         }
 
@@ -114,17 +115,15 @@ public class Track implements Serializable{
 
                     case 1:
                         Lecture lectureAffternoon = lecturesToBeAdded.get(i);
+                        final Integer lastAffternoonSize = track.getAfternoonSession().size();
 
-                        if(isAfternoonSessionEmpty()){
-//                            lectureAffternoon.setSchedule(afternoonBeginTimeSchedule);
+                        if(lastAffternoonSize == 0){
                             Time afterAddingMinsAfternoon=new Time(AFTERNOON_BEGIN_TIME_SCHEDULE);
                             lectureAffternoon.setSchedule(afterAddingMinsAfternoon);
 
                         }else{
-//                            Calendar currentAfternoonCalendar = lecturesToBeAdded.get(i-1).getSchedule();
-//                            lectureAffternoon.setSchedule(currentAfternoonCalendar);
-                            long t= lecturesToBeAdded.get((i-1)).getSchedule().getTime();
-                            Time afterAddingMinsAfternoon=new Time(t + ( lecturesToBeAdded.get(i-1).getMinutes() * ONE_MINUTE_IN_MILLIS));
+                            Lecture lastAfternoonLecture= track.getAfternoonSession().get(lastAffternoonSize-1);
+                            Time afterAddingMinsAfternoon=new Time(lastAfternoonLecture.getSchedule().getTime() + ( lastAfternoonLecture.getMinutes() * ONE_MINUTE_IN_MILLIS));
                             lectureAffternoon.setSchedule(afterAddingMinsAfternoon);
                         }
 
