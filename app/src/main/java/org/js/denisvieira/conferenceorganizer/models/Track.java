@@ -1,5 +1,7 @@
 package org.js.denisvieira.conferenceorganizer.models;
 
+import org.js.denisvieira.conferenceorganizer.utils.LectureUtils;
+
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class Track implements Serializable{
 
     public final static Integer PERIOD_MORNING_TYPE = 0;
     public final static Integer PERIOD_AFTERNOON_TYPE = 1;
+    public final static Integer PERIOD_NETWORKING_TYPE = 5;
 
     private Integer sumTimeMorning = 0;
     private Integer sumTimeAfternoon = 180;
@@ -55,6 +58,18 @@ public class Track implements Serializable{
         }
     }
 
+    public boolean sumAfternoonEqualsToMinutesInArray(){
+
+        boolean isEqual = false;
+        Integer sumMinutesInArray = 0;
+        if(sumTimeAfternoon == sumMinutesInArray) {
+            for (int i = 0; i < getAfternoonSession().size(); i++) {
+                sumMinutesInArray += getAfternoonSession().get(i).getMinutes();
+            }
+        }
+        return true;
+    }
+
     public Integer typeToAddLecture(Lecture lecture) {
 
         if( (sumTimeMorning + lecture.getMinutes()) <= 180){
@@ -66,19 +81,14 @@ public class Track implements Serializable{
             sumTimeAfternoon = sumTimeAfternoon + lecture.getMinutes();
 
             return PERIOD_AFTERNOON_TYPE;
+        }else if (sumAfternoonEqualsToMinutesInArray()){
+
+            return PERIOD_NETWORKING_TYPE;
         }else{
             return 999;
         }
 
     }
-
-    public boolean isAfternoonSessionEmpty(){
-        if(afternoonSession.size() == 0){
-            return true;
-        }
-        return false;
-    }
-
 
     public Track createTrack(ArrayList<Lecture> lecturesToBeAdded, Integer beginPosition){
 
@@ -118,6 +128,15 @@ public class Track implements Serializable{
                         final Integer lastAffternoonSize = track.getAfternoonSession().size();
 
                         if(lastAffternoonSize == 0){
+                            LectureUtils lectureUtils = new LectureUtils();
+                            Lecture lunch = lectureUtils.createLecture("ALMOÇO 60min",50);
+
+                            final Integer lastMorningSizeToLunch = track.getMorningSession().size();
+                            Lecture lastMorningLectureToLunch= track.getMorningSession().get(lastMorningSizeToLunch-1);
+                            Time afterAddingMinsLunch=new Time(lastMorningLectureToLunch.getSchedule().getTime() + ( lastMorningLectureToLunch.getMinutes() * ONE_MINUTE_IN_MILLIS));
+                            lunch.setSchedule(afterAddingMinsLunch);
+                            track.addLecture(lunch,Track.PERIOD_MORNING_TYPE);
+
                             Time afterAddingMinsAfternoon=new Time(AFTERNOON_BEGIN_TIME_SCHEDULE);
                             lectureAffternoon.setSchedule(afterAddingMinsAfternoon);
 
@@ -134,6 +153,17 @@ public class Track implements Serializable{
                         nextTrack = true;
                         break;
                 }
+            }
+
+            if(nextTrack){
+                LectureUtils lectureUtils = new LectureUtils();
+                Lecture networking = lectureUtils.createLecture("Evento de Networking 30min",60);
+
+                final Integer lastAfternoonSizeToNetworking = track.getAfternoonSession().size();
+                Lecture lastAfternoonLectureToNetworking = track.getAfternoonSession().get(lastAfternoonSizeToNetworking-1);
+                Time afterAddingMinsNetworking = new Time(lastAfternoonLectureToNetworking.getSchedule().getTime() + ( lastAfternoonLectureToNetworking.getMinutes() * ONE_MINUTE_IN_MILLIS));
+                networking.setSchedule(afterAddingMinsNetworking);
+                track.addLecture(networking,Track.PERIOD_AFTERNOON_TYPE);
             }
         }
 
