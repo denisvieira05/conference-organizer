@@ -83,8 +83,8 @@ public class Track implements Serializable{
     public Track createTrack(ArrayList<Lecture> lecturesToBeAdded, Integer beginPosition){
 
 
-        final long MORNING_BEGIN_TIME_SCHEDULE= 9*3600000;
-        final long AFTERNOON_BEGIN_TIME_SCHEDULE= 13*3600000;
+        final long MORNING_BEGIN_TIME_SCHEDULE= 32400000+10800000;
+        final long AFTERNOON_BEGIN_TIME_SCHEDULE= 46800000+10800000;
         final long ONE_MINUTE_IN_MILLIS=60000;
 
         boolean nextTrack = false;
