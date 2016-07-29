@@ -1,10 +1,12 @@
 package org.js.denisvieira.conferenceorganizer.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.js.denisvieira.conferenceorganizer.R;
@@ -14,6 +16,7 @@ import org.js.denisvieira.conferenceorganizer.models.Lecture;
 import org.js.denisvieira.conferenceorganizer.models.Track;
 import org.js.denisvieira.conferenceorganizer.utils.LectureUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -92,6 +95,22 @@ public class ListContentFragment extends Fragment {
 
         mAdapter = new LecturesListViewAdapter(getActivity(), track);
         listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Lecture lecture = (Lecture) parent.getAdapter().getItem(position);
+                Integer trackId = getArguments().getInt(ARG_TRACK_NUMBER)+1;
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("HH:mm");
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+                sharingIntent.setType("text/plain");
+                String shareBody = "TODAY at "+dateFormatter.format(lecture.getSchedule().getTime())+" : Lecture about ' "+lecture.getTitle()+" ' in TRACK "+trackId+" of MY CONFERENCE .";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+            }
+        });
 
     }
 
