@@ -1,8 +1,10 @@
 package org.js.denisvieira.conferenceorganizer.models;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by denisvieira on 22/07/16.
@@ -80,14 +82,16 @@ public class Track implements Serializable{
 
     public Track createTrack(ArrayList<Lecture> lecturesToBeAdded, Integer beginPosition){
 
+
+        final long MORNING_BEGIN_TIME_SCHEDULE= 9*3600000;
+        final long AFTERNOON_BEGIN_TIME_SCHEDULE= 13*3600000;
+        final long ONE_MINUTE_IN_MILLIS=60000;
+
         boolean nextTrack = false;
 
         Track track = new Track();
 
         while(!nextTrack){
-
-            long morningBeginTimeSchedule = 32400000;
-            long afternoonBeginTimeSchedule = 46800000;
 
             for (int i = beginPosition; i < lecturesToBeAdded.size(); i++) {
 
@@ -96,11 +100,12 @@ public class Track implements Serializable{
                         Lecture lecture = lecturesToBeAdded.get(i);
 
                         if(i==0){
-                            lecture.setSchedule(morningBeginTimeSchedule);
+                            Time afterAddingMins=new Time(MORNING_BEGIN_TIME_SCHEDULE);
+                            lecture.setSchedule(afterAddingMins);
                         }else{
-                            Calendar currentMilli = Calendar.getInstance();
-                            currentMilli.set(Calendar.MINUTE,lecturesToBeAdded.get(i).getMinutes());
-                            lecture.setSchedule(lecturesToBeAdded.get(i-1).getSchedule() + currentMilli.getTimeInMillis());
+                            long t= lecturesToBeAdded.get(i-1).getSchedule().getTime();
+                            Time afterAddingMins=new Time(t + ( lecturesToBeAdded.get(i-1).getMinutes() * ONE_MINUTE_IN_MILLIS));
+                            lecture.setSchedule(afterAddingMins);
                         }
 
                         track.addLecture(lecture,Track.PERIOD_MORNING_TYPE);
@@ -111,11 +116,16 @@ public class Track implements Serializable{
                         Lecture lectureAffternoon = lecturesToBeAdded.get(i);
 
                         if(isAfternoonSessionEmpty()){
-                            lectureAffternoon.setSchedule(afternoonBeginTimeSchedule);
+//                            lectureAffternoon.setSchedule(afternoonBeginTimeSchedule);
+                            Time afterAddingMinsAfternoon=new Time(AFTERNOON_BEGIN_TIME_SCHEDULE);
+                            lectureAffternoon.setSchedule(afterAddingMinsAfternoon);
+
                         }else{
-                            Calendar currentMilli = Calendar.getInstance();
-                            currentMilli.set(Calendar.MINUTE,lecturesToBeAdded.get(i).getMinutes());
-                            lectureAffternoon.setSchedule(lecturesToBeAdded.get(i-1).getSchedule() + currentMilli.getTimeInMillis());
+//                            Calendar currentAfternoonCalendar = lecturesToBeAdded.get(i-1).getSchedule();
+//                            lectureAffternoon.setSchedule(currentAfternoonCalendar);
+                            long t= lecturesToBeAdded.get((i-1)).getSchedule().getTime();
+                            Time afterAddingMinsAfternoon=new Time(t + ( lecturesToBeAdded.get(i-1).getMinutes() * ONE_MINUTE_IN_MILLIS));
+                            lectureAffternoon.setSchedule(afterAddingMinsAfternoon);
                         }
 
                         track.addLecture(lectureAffternoon,Track.PERIOD_AFTERNOON_TYPE);

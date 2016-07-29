@@ -1,7 +1,9 @@
 package org.js.denisvieira.conferenceorganizer.models;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,7 +18,7 @@ public class Lecture implements Serializable {
     private Integer id;
     private String title;
     private Integer minutes;
-    private long schedule;
+    private Time schedule;
 
     public Lecture(Integer id, String title, Integer minutes) {
 
@@ -28,11 +30,11 @@ public class Lecture implements Serializable {
         this.minutes = minutes;
     }
 
-    public long getSchedule() {
+    public Time getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(long schedule) {
+    public void setSchedule(Time schedule) {
         this.schedule = schedule;
     }
 
