@@ -104,14 +104,16 @@ public class MainActivity extends AppCompatActivity {
             case FILE_SELECT_CODE:
                 if (resultCode == Activity.RESULT_OK) {
                     FileUtils fileUtils = new FileUtils();
+                    Uri uri = data.getData();
+                    File file = new File(uri.getPath());
+
                     ArrayList<String> lectures;
 
-                    Boolean fileIsCorrect = fileUtils.fileIsCorrect(data.getData(),"txt");
+                    Boolean fileIsCorrect = fileUtils.fileIsCorrect(file.getName(),"txt");
 
                     if (fileIsCorrect){
-                        Uri uri = data.getData();
 
-                        lectures = fileUtils.getLecturesStrings(uri, getApplicationContext());
+                        lectures = fileUtils.getLecturesStrings(file.getName(), getApplicationContext());
 
                         if (lectures.size() <= 0) {
                             Toast.makeText(this, "*.txt File with invalid content, click HELP for information on how to format your file.",

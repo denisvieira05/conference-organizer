@@ -4,11 +4,15 @@ import junit.framework.Assert;
 
 import org.js.denisvieira.conferenceorganizer.models.Lecture;
 import org.js.denisvieira.conferenceorganizer.utils.LectureUtils;
-import org.junit.Before;
 import org.junit.Test;
+
 
 import java.util.ArrayList;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anyOf;
@@ -24,13 +28,9 @@ import static org.hamcrest.CoreMatchers.startsWith;
 /**
  * Created by denisvieira on 24/07/16.
  */
-public class LectureTest extends Assert{
+public class LectureTest{
 
     LectureUtils lectureUtils = new LectureUtils();
-
-    private void instantiateCorrectLectureArrayList(){
-
-    }
 
     @Test
     public void creatingLectureSuccess(){

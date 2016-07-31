@@ -30,11 +30,8 @@ import static org.hamcrest.Matchers.not;
 /**
  * Created by denisvieira on 28/07/16.
  */
-@RunWith(AndroidJUnit4.class)
-public class MainActivityTest{
 
-    @Rule
-    public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
+public class ListContentFragmentTest {
 
 //    @Test
 //    public void clickFileImageOpenFileExplorer() throws Exception{
@@ -54,4 +51,5 @@ public class MainActivityTest{
 //        Intents.release();
 ////
 //    }
+
 }

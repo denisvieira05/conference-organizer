@@ -27,10 +27,9 @@ public class FileUtils {
     public FileUtils() {
     }
 
-    public boolean fileIsCorrect(Uri uri,String format){
-        File file = new File(uri.getPath());
-        String ext = file.getName().substring(file.getName().lastIndexOf('.'));
-        if (uri.getLastPathSegment().contains(".") && ext.equals("."+format)){
+    public boolean fileIsCorrect(String fileName,String format){
+        String ext = fileName.substring(fileName.lastIndexOf('.'));
+        if (fileName.contains(".") && ext.equals("."+format)){
             return true;
         }else {
             return false;
@@ -38,13 +37,12 @@ public class FileUtils {
     }
 
 
-    public ArrayList<String> getLecturesStrings(Uri uri, Context context){
-        File file = new File(uri.getPath());
+    public ArrayList<String> getLecturesStrings(String fileName, Context context){
         ArrayList<String> lectures = new ArrayList<String>();
 
         try {
             AssetManager assetManager = context.getResources().getAssets();
-            InputStream inputStream = assetManager.open(file.getName());
+            InputStream inputStream = assetManager.open(fileName);
 //          InputStream inputStream = assetManager.open("proposals.txt");
 
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

@@ -15,7 +15,6 @@ public class Track implements Serializable{
 
     public final static Integer PERIOD_MORNING_TYPE = 0;
     public final static Integer PERIOD_AFTERNOON_TYPE = 1;
-    public final static Integer PERIOD_NETWORKING_TYPE = 5;
 
     private Integer sumTimeMorning = 0;
     private Integer sumTimeAfternoon = 180;
@@ -51,23 +50,13 @@ public class Track implements Serializable{
     }
 
     public void addLecture(Lecture lecture,Integer type){
+
         if(type == PERIOD_MORNING_TYPE){
             morningSession.add(lecture);
         }else if(type == PERIOD_AFTERNOON_TYPE) {
             afternoonSession.add(lecture);
         }
-    }
 
-    public boolean sumAfternoonEqualsToMinutesInArray(){
-
-        boolean isEqual = false;
-        Integer sumMinutesInArray = 0;
-        if(sumTimeAfternoon == sumMinutesInArray) {
-            for (int i = 0; i < getAfternoonSession().size(); i++) {
-                sumMinutesInArray += getAfternoonSession().get(i).getMinutes();
-            }
-        }
-        return true;
     }
 
     public Integer typeToAddLecture(Lecture lecture) {
@@ -77,13 +66,10 @@ public class Track implements Serializable{
 
             return PERIOD_MORNING_TYPE;
 
-        }else if((sumTimeAfternoon + lecture.getMinutes()) <= 420 && (sumTimeAfternoon + lecture.getMinutes()) > 180){
+        }else if((sumTimeAfternoon + lecture.getMinutes()) <= 420 && (sumTimeAfternoon + lecture.getMinutes()) > 180) {
             sumTimeAfternoon = sumTimeAfternoon + lecture.getMinutes();
 
             return PERIOD_AFTERNOON_TYPE;
-        }else if (sumAfternoonEqualsToMinutesInArray()){
-
-            return PERIOD_NETWORKING_TYPE;
         }else{
             return 999;
         }
@@ -128,6 +114,7 @@ public class Track implements Serializable{
                         final Integer lastAffternoonSize = track.getAfternoonSession().size();
 
                         if(lastAffternoonSize == 0){
+
                             LectureUtils lectureUtils = new LectureUtils();
                             Lecture lunch = lectureUtils.createLecture("ALMOÇO 60min",50);
 
