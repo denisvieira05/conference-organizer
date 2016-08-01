@@ -30,46 +30,39 @@ public class LectureUtils {
         }else{
             return lecturesArrayList;
         }
-
-
     }
 
     public Lecture createLecture(String lectureString, int position) {
-
         if(position < 0){
             return null;
         }
 
         String title;
         Integer minutes;
-        List<String> strTimes = new ArrayList();
+        List<String> timeString = new ArrayList();
 
-        //Tentar colocar em uma só.
-        String expressionPattern = "([0-9][0-9])min"; // padrão para os minutos
+        String expressionPattern = "([0-9][0-9])min";
         String lightningExpressionPattern = "(lightning)";
 
-        //Patern e Matcher normal
         Pattern pattern = Pattern.compile(expressionPattern);
         Matcher matcher = pattern.matcher(lectureString);
 
-        //Pattern e Matcher do lightning
-        Pattern lightningPatern = Pattern.compile(lightningExpressionPattern);
-        Matcher lightningMatcher = lightningPatern.matcher(lectureString);
+        Pattern patternForLightning = Pattern.compile(lightningExpressionPattern);
+        Matcher lightningMatcher = patternForLightning.matcher(lectureString);
 
         while (matcher.find()) {
-            strTimes.add(matcher.group());
+            timeString.add(matcher.group());
         }
 
-        if (strTimes.size() > 0) {
-            title = lectureString.replace(strTimes.get(0).trim(), "").trim();
-            minutes = Integer.parseInt(strTimes.get(0).trim().replace("min", ""));
+        if (timeString.size() > 0) {
+            title = lectureString.replace(timeString.get(0).trim(), "").trim();
+            minutes = Integer.parseInt(timeString.get(0).trim().replace("min", ""));
 
             if(minutes <= 0 || minutes > 60 || title.equals("")) {
                 return null;
             }else{
                 return new Lecture(position, title, minutes);
             }
-
 
         } else {
 

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public  void onClick(View v){
 
-//                 text without chooser
+//                 test without chooser
 //                ArrayList<String> lectures;
 //                FileUtils fileUtils = new FileUtils();
 //                lectures = fileUtils.getLecturesStrings(getApplicationContext());
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                     FileUtils fileUtils = new FileUtils();
                     Uri uri = data.getData();
                     File file = new File(uri.getPath());
-
                     ArrayList<String> lectures;
 
                     Boolean fileIsCorrect = fileUtils.fileIsCorrect(file.getName(),"txt");

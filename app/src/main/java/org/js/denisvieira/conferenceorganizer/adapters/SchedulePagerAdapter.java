@@ -15,19 +15,13 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
     public Context mContext;
 
     public SchedulePagerAdapter(Context context,FragmentManager fm) {
-
         super(fm);
         mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a ListContentFragment (defined as a static inner class below).
-
         return ListContentFragment.newInstance(position);
-
     }
 
     @Override
@@ -37,7 +31,6 @@ public class SchedulePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-
        return "Track "+(position+1);
     }
 

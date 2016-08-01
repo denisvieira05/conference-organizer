@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
  * Created by denisvieira on 20/07/16.
  */
 public class Lecture implements Serializable {
-
-
     private Integer id;
     private String title;
     private Integer minutes;

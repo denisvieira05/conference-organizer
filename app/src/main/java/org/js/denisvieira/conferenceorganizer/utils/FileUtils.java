@@ -58,11 +58,7 @@ public class FileUtils {
             e.printStackTrace();
         }
 
-
         return lectures;
-
-
-
     }
 
     public Integer checkLecturesStrings(ArrayList<String> lectures){

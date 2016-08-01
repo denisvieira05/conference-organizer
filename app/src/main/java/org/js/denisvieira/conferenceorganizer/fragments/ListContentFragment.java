@@ -24,12 +24,11 @@ import java.util.ArrayList;
  */
 public class ListContentFragment extends Fragment {
 
+    private static final String ARG_TRACK_NUMBER = "track_number";
+
     private ListView listView;
     private ArrayList<Lecture> lecturesArrayList;
     LecturesListViewAdapter mAdapter;
-
-
-    private static final String ARG_TRACK_NUMBER = "track_number";
 
     public ListContentFragment() {
     }
@@ -37,9 +36,7 @@ public class ListContentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-        setHasOptionsMenu(true);
-
+        setHasOptionsMenu(false);
     }
 
     public static ListContentFragment newInstance(int sectionNumber) {
@@ -55,12 +52,8 @@ public class ListContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.fragment_schedule_content, container, false);
-
         listView = (ListView) rootView.findViewById(R.id.lectures_lv);
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText("view :"+getArguments().getInt(ARG_TRACK_NUMBER));
         Integer trackId = getArguments().getInt(ARG_TRACK_NUMBER);
         getLecturesList(trackId);
 
@@ -70,21 +63,17 @@ public class ListContentFragment extends Fragment {
 
     public void getLecturesList(Integer trackId) {
         listView.setAdapter(null);
-
         lecturesArrayList = new ArrayList<>();
+        ArrayList<Track> tracksOfConference = new ArrayList<>();
+        LectureUtils lectureUtils = new LectureUtils();
+        Conference conference = new Conference();
+        ArrayList<Lecture> track = new ArrayList<>();
 
         Bundle bundle = getActivity().getIntent().getExtras();
         ArrayList<String> lecturesString = bundle.getStringArrayList("lectures");
 
-        LectureUtils lectureUtils = new LectureUtils();
         lecturesArrayList = lectureUtils.createLectureArrayList(lecturesString);
-
-        ArrayList<Track> tracksOfConference = new ArrayList<>();
-
-        Conference conference = new Conference();
         tracksOfConference.addAll(conference.organizeConference(lecturesArrayList));
-
-        ArrayList<Lecture> track = new ArrayList<>();
 
         for (int b = 0; b < tracksOfConference.get(trackId).getMorningSession().size(); b++) {
             track.add(tracksOfConference.get(trackId).getMorningSession().get(b));

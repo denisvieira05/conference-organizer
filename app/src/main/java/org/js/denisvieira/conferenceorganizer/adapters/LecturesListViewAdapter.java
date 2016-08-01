@@ -30,17 +30,10 @@ public class LecturesListViewAdapter extends ArrayAdapter<Lecture> {
     @SuppressLint({ "ViewHolder", "InflateParams" })
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-
         Lecture lecture = getItem(position);
-
         view = LayoutInflater.from(getContext()).inflate(R.layout.item_lecture, null);
-
-//        String hour = String.format("%02d:%02d",
-//                TimeUnit.MILLISECONDS.toHours(lecture.getSchedule()),
-//                TimeUnit.MILLISECONDS.toMinutes(lecture.getSchedule()) -
-//                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(lecture.getSchedule())));
-
         SimpleDateFormat dateFormatter = new SimpleDateFormat("HH:mm");
+
         ((TextView)view.findViewById(R.id.hour_tv)).setText(dateFormatter.format(lecture.getSchedule().getTime()));
         ((TextView)view.findViewById(R.id.title_tv)).setText(lecture.getTitle());
         ((TextView)view.findViewById(R.id.time_tv)).setText(lecture.getMinutes().toString()+"min");

@@ -35,8 +35,8 @@ public class TrackTest {
     @Test
     public void notAddWithIncorrectTypeTrack(){
         Track track = new Track();
-
         LectureUtils lectureUtils = new LectureUtils();
+
         Lecture lecture = lectureUtils.createLecture("Desenvolvimento orientado a gambiarras 45min",1);
 
         track.addLecture(lecture,3);

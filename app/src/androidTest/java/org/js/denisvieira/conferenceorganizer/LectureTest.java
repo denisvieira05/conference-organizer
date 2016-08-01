@@ -62,6 +62,7 @@ public class LectureTest{
     @Test
     public void creatingLectureArrayListSuccess(){
         ArrayList<String> lecturesStrings = new ArrayList();
+        ArrayList<Lecture> lectureArrayList = new ArrayList();
 
         lecturesStrings.add("Erros de Ruby oriundos de versões erradas de gems 45");
         lecturesStrings.add("Aplicações isomórficas: o futuro (que talvez nunca chegaremos) 80min");
@@ -70,7 +71,6 @@ public class LectureTest{
         lecturesStrings.add("Programação em par 45min");
         lecturesStrings.add("Ruby vs. Clojure para desenvolvimento backend 30min");
 
-        ArrayList<Lecture> lectureArrayList = new ArrayList();
         lectureArrayList = lectureUtils.createLectureArrayList(lecturesStrings);
 
         assertNotNull("should not be null", lectureArrayList);
@@ -81,12 +81,13 @@ public class LectureTest{
     @Test
     public void creatingLectureArrayListFail(){
         ArrayList<String> lecturesStrings = new ArrayList<>();
+        ArrayList<Lecture> lectureArrayList = new ArrayList<>();
+
         lecturesStrings.add("Diminuindo tempo de execução de testes em aplicações Rails enterprise");
         lecturesStrings.add("Ruby on Rails: Por que devemos deixá-lo para trás 60");
         lecturesStrings.add("Programação em par 80min");
         lecturesStrings.add("30min");
 
-        ArrayList<Lecture> lectureArrayList = new ArrayList<>();
         lectureArrayList = lectureUtils.createLectureArrayList(lecturesStrings);
 
         assertNull("should be null", lectureArrayList);

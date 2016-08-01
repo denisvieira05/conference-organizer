@@ -23,9 +23,7 @@ public class Conference {
     }
 
     public ArrayList<Track> organizeConference(ArrayList<Lecture> lecturesToBeAdded){
-
         conference = new ArrayList<>();
-
         Integer beginPosition = 0;
 
         while (beginPosition < lecturesToBeAdded.size()){
